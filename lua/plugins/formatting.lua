@@ -1,39 +1,28 @@
 return {
-  "stevearc/conform.nvim",
-  lazy = true,
-  event = { "BufReadPre", "BufNewFile" }, -- to disable, comment this out
-  config = function()
-    local conform = require("conform")
-
-    conform.setup({
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      table.insert(opts.ensure_installed, "black")
+      table.insert(opts.ensure_installed, "ruff")
+    end,
+  },
+  {
+    "nvimtools/none-ls.nvim",
+    optional = true,
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, nls.builtins.formatting.black)
+      table.insert(opts.sources, nls.builtins.formatting.ruff)
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
       formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javascriptreact = { "prettier" },
-        typescriptreact = { "prettier" },
-        svelte = { "prettier" },
-        css = { "prettier" },
-        html = { "prettier" },
-        json = { "prettier" },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
-        graphql = { "prettier" },
-        lua = { "stylua" },
-        python = { "ruff", "black" },
+        ["python"] = { "black", "ruff" },
       },
-      format_on_save = {
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      },
-    })
-
-    vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-      conform.format({
-        lsp_fallback = true,
-        async = false,
-        timeout_ms = 1000,
-      })
-    end, { desc = "Format file or range (in visual mode)" })
-  end,
+    },
+  },
 }
