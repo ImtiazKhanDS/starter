@@ -1,4 +1,4 @@
 if __name__ == "__main__":
     print("Hello World")
-    a = 2
+    a = int(input("Enter Number : "))
     b = "gre"

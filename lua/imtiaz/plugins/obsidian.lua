@@ -20,14 +20,9 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/Desktop/notes/personal",
-      },
-      {
-        name = "work",
-        path = "~/Desktop/notes/work",
+        path = "~/Documents/Obsidian Vault",
       },
     },
-
     -- see below for full list of options 👇
   },
 }
